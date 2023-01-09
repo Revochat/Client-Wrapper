@@ -1,45 +1,37 @@
-import { IUserMe } from "../model/users.model";
-const Socket = require('socket.io-client')("localhost:3000");
-import Eventsuper from "events";
+import { IUserMe } from "../model/users.model"
+import EventEmitter from "events";
+import { Socket } from "socket.io-client";
 
-export class Client extends Eventsuper { 
+export class Client extends EventEmitter { 
     private user: IUserMe | null = null;
-
+    public Socket = require('socket.io-client')("http://localhost:3000");
     constructor() {
         super();
-        Socket.on('disconnect', () => {
-            this.user = null;
-            super.emit('disconnect');
-        });
-
         this.init();
     }
 
     public async init(){
-        Socket.on('message', (message: any) => super.emit('message', message));
-        Socket.on('friendRequest', (request: any) => super.emit('friendRequest', request));
+        this.Socket.on('message', (message: any) => this.emit('message', message));
+        this.Socket.on('friendRequest', (request: any) => this.emit('friendRequest', request));
 
-        Socket.on('friendRequestAccepted', (request: any) => super.emit('friendRequestAccepted', request));
-        Socket.on('friendRequestDeclined', (request: any) => super.emit('friendRequestDeclined', request));
-        Socket.on('friendRequestRemoved', (request: any) => super.emit('friendRequestRemoved', request));
+        this.Socket.on('friendRequestAccepted', (request: any) => this.emit('friendRequestAccepted', request));
+        this.Socket.on('friendRequestDeclined', (request: any) => this.emit('friendRequestDeclined', request));
+        this.Socket.on('friendRequestRemoved', (request: any) => this.emit('friendRequestRemoved', request));
 
-        Socket.on('addBlockedUser', (user: any) => super.emit('addBlockedUser', user));
-        Socket.on('removeBlockedUser', (user: any) => super.emit('removeBlockedUser', user));
+        this.Socket.on('addBlockedUser', (user: any) => this.emit('addBlockedUser', user));
+        this.Socket.on('removeBlockedUser', (user: any) => this.emit('removeBlockedUser', user));
 
-        Socket.on('addFriend', (user: any) => super.emit('addFriend', user));
-        Socket.on('removeFriend', (user: any) => super.emit('removeFriend', user));
+        this.Socket.on('addFriend', (user: any) => this.emit('addFriend', user));
+        this.Socket.on('removeFriend', (user: any) => this.emit('removeFriend', user));
 
-        Socket.on('serverJoin', (server: any) => super.emit('serverJoin', server));
-        Socket.on('serverLeave', (server: any) => super.emit('serverLeave', server));
+        this.Socket.on('serverJoin', (server: any) => this.emit('serverJoin', server));
+        this.Socket.on('serverLeave', (server: any) => this.emit('serverLeave', server));
+        this.Socket.on('ready', (user: IUserMe) => {
+            user == null ? new Error('Bad token') : this.emit('ready', user);
+        });
     }
 
     public login(token: string) {
-        setTimeout(() => {
-            Socket.emit('login', token);
-            Socket.on('login', (user: IUserMe) => {
-                this.user = user;
-                super.emit('login', user);
-            });
-        }, 2000)
+        this.Socket.emit('login', token);
     }
 }
