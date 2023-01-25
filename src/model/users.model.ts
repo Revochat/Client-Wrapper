@@ -1,4 +1,5 @@
 export interface IUser {
+    avatar: string;
     user_id: number;
 
     wallet_token?: number | null;
