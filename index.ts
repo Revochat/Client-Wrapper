@@ -1,11 +1,19 @@
 import Revochat, {IUserMe} from "./src"
+import axios from "axios"
 
-const client = new Revochat.Client();
+const token: string = "9495D46432A654ED8185867A09BFB5341673519436689";
 
-const token: string = "274EDA4361415F6D80A422C16EAE329B1673185250396";
+const Socket = require('socket.io-client')("http://localhost:3000");
 
-client.login(token)
+Socket.emit("login", token);
 
-client.on("ready", user => {
-    console.log("Ready " + Object.keys(user).forEach(key => console.log(key + ": " + user[key])))
+Socket.on("login", (user: any) => {
+    console.log(user)
+})
+setInterval(() => {
+    Socket.emit("messageCreate", 1674170678674, "hello")
+}, 2500)
+
+Socket.on("messageCreate", (message: any) => {
+    console.log(message)
 })
