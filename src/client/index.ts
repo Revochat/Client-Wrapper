@@ -26,8 +26,8 @@ export class Client extends EventEmitter {
 
         this.Socket.on('serverJoin', (server: any) => this.emit('serverJoin', server));
         this.Socket.on('serverLeave', (server: any) => this.emit('serverLeave', server));
-        this.Socket.on('ready', (user: IUserMe) => {
-            user == null ? new Error('Bad token') : this.emit('ready', user);
+        this.Socket.on('login', (user: IUserMe) => {
+            user !== null ? this.emit('ready', user) : new Error('Bad token');
         });
     }
 
