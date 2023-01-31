@@ -1,17 +1,21 @@
 import { IUserMe } from "../model/users.model"
 import EventEmitter from "events";
-import { Socket } from "socket.io-client";
+import { UserClass } from "./user/interface/User";
+import { Message } from "./message";
+import { UserMessage } from "./user/message";
 
 export class Client extends EventEmitter { 
-    private user: IUserMe | null = null;
+    public user!: UserClass;
     public Socket = require('socket.io-client')("http://localhost:3000");
+    static Socket: any;
+    public message = UserMessage;
     constructor() {
         super();
         this.init();
     }
 
-    public async init(){
-        this.Socket.on('message', (message: any) => this.emit('message', message));
+    private async init(){
+        this.Socket.on('messageCreate', (message: any) => {if(message.data) this.emit('messageCreate', new Message(message.data, this.Socket))});
         this.Socket.on('friendRequest', (request: any) => this.emit('friendRequest', request));
 
         this.Socket.on('friendRequestAccepted', (request: any) => this.emit('friendRequestAccepted', request));
@@ -28,8 +32,13 @@ export class Client extends EventEmitter {
         this.Socket.on('serverLeave', (server: any) => this.emit('serverLeave', server));
         this.Socket.on('login', (user: IUserMe) => {
             user !== null ? this.emit('ready', user) : new Error('Bad token');
+            if(user === null) throw new Error('Bad token');
+            this.user = user;
         });
     }
+
+
+
 
     public login(token: string) {
         this.Socket.emit('login', token);
