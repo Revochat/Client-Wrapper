@@ -8,7 +8,7 @@ export class Client extends EventEmitter {
     public user!: UserClass;
     public Socket = require('socket.io-client')("http://localhost:3000");
     static Socket: any;
-    public message = UserMessage;
+    public message = new UserMessage(this.Socket);
     constructor() {
         super();
         this.init();

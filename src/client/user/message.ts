@@ -1,7 +1,15 @@
 import { Socket } from "socket.io-client";
-import { Client } from "..";
-
 
 export class UserMessage {
-    constructor(Socket: Socket){}
+    public socket: Socket;
+
+    constructor(Socket: Socket){
+        this.socket = Socket;
+    }
+
+    send(channelID: number, message: string): void {
+        this.socket.emit('messageCreate', channelID, message)
+    }
+
+    delete(){}
 }
