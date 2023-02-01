@@ -3,10 +3,12 @@ import EventEmitter from "events";
 import { UserClass } from "./user/interface/User";
 import { Message } from "./message";
 import { UserMessage } from "./user/message";
+import Config from "../config";
+
 
 export class Client extends EventEmitter { 
     public user!: UserClass;
-    public Socket = require('socket.io-client')("http://localhost:3000");
+    public Socket = require('socket.io-client')(Config.URI, {transports: ['websocket']});
     static Socket: any;
     public message = new UserMessage(this.Socket);
     constructor() {

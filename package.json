@@ -7,5 +7,29 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.18"
-  }
+  },
+  "name": "revochatjs",
+  "version": "1.0.0",
+  "description": "Revochat client module",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Revochat/Client-Wrapper.git"
+  },
+  "keywords": [
+    "Client",
+    "Typescript",
+    "Javascript",
+    "API",
+    "Socket"
+  ],
+  "author": "Revochat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Revochat/Client-Wrapper/issues"
+  },
+  "homepage": "https://github.com/Revochat/Client-Wrapper#readme"
 }
