@@ -16,11 +16,14 @@ exports.Client = void 0;
 const events_1 = __importDefault(require("events"));
 const message_1 = require("./message");
 const message_2 = require("./user/message");
+const config_1 = __importDefault(require("../config"));
+const friends_1 = require("./user/friends");
 class Client extends events_1.default {
     constructor() {
         super();
-        this.Socket = require('socket.io-client')("http://localhost:3000");
+        this.Socket = require('socket.io-client')(config_1.default.URI, { transports: ['websocket'] });
         this.message = new message_2.UserMessage(this.Socket);
+        this.friend = new friends_1.UserFriends(this.Socket);
         this.init();
     }
     init() {

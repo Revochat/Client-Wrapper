@@ -4,6 +4,7 @@ import { UserClass } from "./user/interface/User";
 import { Message } from "./message";
 import { UserMessage } from "./user/message";
 import Config from "../config";
+import { UserFriends } from "./user/friends";
 
 
 export class Client extends EventEmitter { 
@@ -11,6 +12,7 @@ export class Client extends EventEmitter {
     public Socket = require('socket.io-client')(Config.URI, {transports: ['websocket']});
     static Socket: any;
     public message = new UserMessage(this.Socket);
+    public friend = new UserFriends(this.Socket);
     constructor() {
         super();
         this.init();
