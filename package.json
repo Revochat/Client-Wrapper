@@ -9,7 +9,7 @@
     "@types/node": "^18.11.18"
   },
   "name": "revochatjs",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "Revochat client module",
   "main": "index.ts",
   "scripts": {
