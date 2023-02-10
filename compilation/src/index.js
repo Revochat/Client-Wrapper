@@ -17,7 +17,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("./client");
 __exportStar(require("./client"), exports);
 __exportStar(require("./model"), exports);
-__exportStar(require("./utils"), exports);
+// export * from './utils';
 __exportStar(require("./config"), exports);
 exports.default = {
     Client: client_1.Client,

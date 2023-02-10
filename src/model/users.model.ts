@@ -1,6 +1,7 @@
 export interface IUser {
     avatar: string;
     user_id: number;
+    discriminator: string;
 
     wallet_token?: number | null;
     username: string;

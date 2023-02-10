@@ -8,7 +8,7 @@ export class UserMessage {
     }
 
     send(channelID: number, message: string): void {
-        this.socket.emit('messageDelete', channelID, message)
+        this.socket.emit('messageCreate', channelID, message)
     }
 
     delete(channelID: number, messageID: number): void {

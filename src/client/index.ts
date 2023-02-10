@@ -2,7 +2,7 @@ import { IUserMe } from "../model/users.model"
 import EventEmitter from "events";
 import { UserClass } from "./user/interface/User";
 import { Message } from "./message";
-import { UserMessage } from "./user/message";
+import { UserMessage } from "./user/messages";
 import Config from "../config";
 import { UserFriends } from "./user/friends";
 

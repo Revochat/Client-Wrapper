@@ -1,6 +1,6 @@
 {
   "name": "revochat-client",
-  "version": "1.1.0",
+  "version": "1.1.6",
   "description": "Client Module for Revochat",
   "main": "index.js",
   "scripts": {
