@@ -5,6 +5,7 @@ import { Message } from "./message";
 import { UserMessage } from "./user/messages";
 import Config from "../config";
 import { UserFriends } from "./user/friends";
+import { UserPings } from "./user/ping";
 
 
 export class Client extends EventEmitter { 
@@ -13,6 +14,7 @@ export class Client extends EventEmitter {
     static Socket: any;
     public message = new UserMessage(this.Socket);
     public friend = new UserFriends(this.Socket);
+    public ping = new UserPings(this.Socket);
     constructor() {
         super();
         this.init();
@@ -41,13 +43,6 @@ export class Client extends EventEmitter {
             this.user = user;
         });
     }
-
-    public ping(user_id: number){
-        this.Socket.emit('pingUser', user_id);
-    }
-
-
-
 
     public login(token: string) {
         this.Socket.emit('login', token);

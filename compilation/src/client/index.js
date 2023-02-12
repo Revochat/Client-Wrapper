@@ -18,12 +18,14 @@ const message_1 = require("./message");
 const messages_1 = require("./user/messages");
 const config_1 = __importDefault(require("../config"));
 const friends_1 = require("./user/friends");
+const ping_1 = require("./user/ping");
 class Client extends events_1.default {
     constructor() {
         super();
         this.Socket = require('socket.io-client')(config_1.default.URI, { transports: ['websocket'] });
         this.message = new messages_1.UserMessage(this.Socket);
         this.friend = new friends_1.UserFriends(this.Socket);
+        this.ping = new ping_1.UserPings(this.Socket);
         this.init();
     }
     init() {
@@ -48,9 +50,6 @@ class Client extends events_1.default {
                 this.user = user;
             });
         });
-    }
-    ping(user_id) {
-        this.Socket.emit('pingUser', user_id);
     }
     login(token) {
         this.Socket.emit('login', token);
