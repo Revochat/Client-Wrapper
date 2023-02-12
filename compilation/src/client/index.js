@@ -38,6 +38,7 @@ class Client extends events_1.default {
             this.Socket.on('removeBlockedUser', (user) => this.emit('removeBlockedUser', user));
             this.Socket.on('addFriend', (user) => this.emit('addFriend', user));
             this.Socket.on('removeFriend', (user) => this.emit('removeFriend', user));
+            this.Socket.on('pingUser', (user) => this.emit('pingUser', user));
             this.Socket.on('serverJoin', (server) => this.emit('serverJoin', server));
             this.Socket.on('serverLeave', (server) => this.emit('serverLeave', server));
             this.Socket.on('login', (user) => {
@@ -47,6 +48,9 @@ class Client extends events_1.default {
                 this.user = user;
             });
         });
+    }
+    ping(user_id) {
+        this.Socket.emit('pingUser', user_id);
     }
     login(token) {
         this.Socket.emit('login', token);

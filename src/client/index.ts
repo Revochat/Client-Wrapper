@@ -31,6 +31,7 @@ export class Client extends EventEmitter {
 
         this.Socket.on('addFriend', (user: any) => this.emit('addFriend', user));
         this.Socket.on('removeFriend', (user: any) => this.emit('removeFriend', user));
+        this.Socket.on('pingUser', (user: any) => this.emit('pingUser', user));
 
         this.Socket.on('serverJoin', (server: any) => this.emit('serverJoin', server));
         this.Socket.on('serverLeave', (server: any) => this.emit('serverLeave', server));
@@ -39,6 +40,10 @@ export class Client extends EventEmitter {
             if(user === null) throw new Error('Bad token');
             this.user = user;
         });
+    }
+
+    public ping(user_id: number){
+        this.Socket.emit('pingUser', user_id);
     }
 
 
