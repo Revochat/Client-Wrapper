@@ -5,8 +5,8 @@ class UserPings {
     constructor(Socket) {
         this.socket = Socket;
     }
-    user(userID) {
-        this.socket.emit('pingUser', userID);
+    user(userID, message) {
+        this.socket.emit('pingUser', userID, message);
     }
 }
 exports.UserPings = UserPings;
