@@ -6,6 +6,7 @@ import { UserMessage } from "./user/messages";
 import Config from "../config";
 import { UserFriends } from "./user/friends";
 import { UserPings } from "./user/ping";
+import { UserRTC } from "./rtc";
 
 
 export class Client extends EventEmitter { 
@@ -15,6 +16,7 @@ export class Client extends EventEmitter {
     public message = new UserMessage(this.Socket);
     public friend = new UserFriends(this.Socket);
     public ping = new UserPings(this.Socket);
+    public call = new UserRTC(this.Socket);
     constructor() {
         super();
         this.init();

@@ -8,5 +8,3 @@ export * from './config';
 export default  {
     Client: Client,
 }
-
-
