@@ -15,7 +15,7 @@ export interface IUserMe extends IUser {
     token: string;
     
     servers?: number[];
-    channels?: number[];
+    channels?: Array<object>;
     friends?: Array<object>;
     friends_requests_received?: Array<object>;
     friends_requests_sent?: Array<object>;

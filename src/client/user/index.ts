@@ -4,7 +4,7 @@ import { UserClass } from "./interface/User";
 export class User implements UserClass{
     public token!: string;
     public servers?: number[] | undefined;
-    public channels?: number[] | undefined;
+    public channels?: Array<object> | undefined;
     public channels_obj?: Array<object> | undefined;
     public friends?: Array<object> | undefined;
     public friends_requests_received?: Array<object> | undefined;
