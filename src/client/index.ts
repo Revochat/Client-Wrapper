@@ -7,6 +7,7 @@ import Config from "../config";
 import { UserFriends } from "./user/friends";
 import { UserPings } from "./user/ping";
 import { UserRTC } from "./rtc";
+import { UserChannels } from "./user/channels";
 
 
 export class Client extends EventEmitter { 
@@ -36,12 +37,15 @@ export class Client extends EventEmitter {
         this.Socket.on('addFriend', (user: any) => this.emit('addFriend', user));
         this.Socket.on('removeFriend', (user: any) => this.emit('removeFriend', user));
         this.Socket.on('pingUser', (user: any) => this.emit('pingUser', user));
+        this.Socket
 
         this.Socket.on('serverJoin', (server: any) => this.emit('serverJoin', server));
-        this.Socket.on('serverLeave', (server: any) => this.emit('serverLeave', server));
+        this.Socket.on('serverLeave', (server: any) => this.emit('serverLeave', server))
+        this.Socket.on('channelsGet', (channels: any) => this.emit('channelsGet', channels))
         this.Socket.on('login', (user: IUserMe) => {
             user !== null ? this.emit('ready', user) : new Error('Bad token');
             if(user === null) throw new Error('Bad token');
+            this.Socket.emit('channelsGet');
             this.user = user;
         });
     }

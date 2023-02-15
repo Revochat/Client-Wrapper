@@ -19,6 +19,7 @@ const messages_1 = require("./user/messages");
 const config_1 = __importDefault(require("../config"));
 const friends_1 = require("./user/friends");
 const ping_1 = require("./user/ping");
+const rtc_1 = require("./rtc");
 class Client extends events_1.default {
     constructor() {
         super();
@@ -26,6 +27,7 @@ class Client extends events_1.default {
         this.message = new messages_1.UserMessage(this.Socket);
         this.friend = new friends_1.UserFriends(this.Socket);
         this.ping = new ping_1.UserPings(this.Socket);
+        this.call = new rtc_1.UserRTC(this.Socket);
         this.init();
     }
     init() {
@@ -41,12 +43,15 @@ class Client extends events_1.default {
             this.Socket.on('addFriend', (user) => this.emit('addFriend', user));
             this.Socket.on('removeFriend', (user) => this.emit('removeFriend', user));
             this.Socket.on('pingUser', (user) => this.emit('pingUser', user));
+            this.Socket;
             this.Socket.on('serverJoin', (server) => this.emit('serverJoin', server));
             this.Socket.on('serverLeave', (server) => this.emit('serverLeave', server));
+            this.Socket.on('channelsGet', (channels) => this.emit('channelsGet', channels));
             this.Socket.on('login', (user) => {
                 user !== null ? this.emit('ready', user) : new Error('Bad token');
                 if (user === null)
                     throw new Error('Bad token');
+                this.Socket.emit('channelsGet');
                 this.user = user;
             });
         });
