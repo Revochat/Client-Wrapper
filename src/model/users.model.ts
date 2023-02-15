@@ -16,9 +16,9 @@ export interface IUserMe extends IUser {
     
     servers?: number[];
     channels?: number[];
-    friends?: number[];
-    friends_requests_received?: number[];
-    friends_requests_sent?: number[];
+    friends?: Array<object>;
+    friends_requests_received?: Array<object>;
+    friends_requests_sent?: Array<object>;
     blocked?: number[];
 
     last_connection?: string;

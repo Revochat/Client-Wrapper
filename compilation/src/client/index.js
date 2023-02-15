@@ -20,6 +20,7 @@ const config_1 = __importDefault(require("../config"));
 const friends_1 = require("./user/friends");
 const ping_1 = require("./user/ping");
 const rtc_1 = require("./rtc");
+const EVENTS_1 = require("./user/utils/EVENTS");
 class Client extends events_1.default {
     constructor() {
         super();
@@ -34,24 +35,15 @@ class Client extends events_1.default {
         return __awaiter(this, void 0, void 0, function* () {
             this.Socket.on('messageCreate', (message) => { if (message.data)
                 this.emit('messageCreate', new message_1.Message(message.data, this.Socket)); });
-            this.Socket.on('friendRequest', (request) => this.emit('friendRequest', request));
-            this.Socket.on('friendRequestAccepted', (request) => this.emit('friendRequestAccepted', request));
-            this.Socket.on('friendRequestDeclined', (request) => this.emit('friendRequestDeclined', request));
-            this.Socket.on('friendRequestRemoved', (request) => this.emit('friendRequestRemoved', request));
-            this.Socket.on('addBlockedUser', (user) => this.emit('addBlockedUser', user));
-            this.Socket.on('removeBlockedUser', (user) => this.emit('removeBlockedUser', user));
-            this.Socket.on('addFriend', (user) => this.emit('addFriend', user));
-            this.Socket.on('removeFriend', (user) => this.emit('removeFriend', user));
-            this.Socket.on('pingUser', (user) => this.emit('pingUser', user));
-            this.Socket;
-            this.Socket.on('serverJoin', (server) => this.emit('serverJoin', server));
-            this.Socket.on('serverLeave', (server) => this.emit('serverLeave', server));
-            this.Socket.on('channelsGet', (channels) => this.emit('channelsGet', channels));
+            for (let event of EVENTS_1.EVENTS) {
+                this.Socket.on(event, (data) => this.emit(event, data));
+            }
             this.Socket.on('login', (user) => {
                 user !== null ? this.emit('ready', user) : new Error('Bad token');
                 if (user === null)
                     throw new Error('Bad token');
                 this.Socket.emit('channelsGet');
+                this.Socket.on('channelsGet', (channels) => console.log(channels));
                 this.user = user;
             });
         });

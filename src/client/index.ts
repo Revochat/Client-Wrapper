@@ -8,6 +8,7 @@ import { UserFriends } from "./user/friends";
 import { UserPings } from "./user/ping";
 import { UserRTC } from "./rtc";
 import { UserChannels } from "./user/channels";
+import { EVENTS } from "./user/utils/EVENTS";
 
 
 export class Client extends EventEmitter { 
@@ -25,27 +26,17 @@ export class Client extends EventEmitter {
 
     private async init(){
         this.Socket.on('messageCreate', (message: any) => {if(message.data) this.emit('messageCreate', new Message(message.data, this.Socket))});
-        this.Socket.on('friendRequest', (request: any) => this.emit('friendRequest', request));
 
-        this.Socket.on('friendRequestAccepted', (request: any) => this.emit('friendRequestAccepted', request));
-        this.Socket.on('friendRequestDeclined', (request: any) => this.emit('friendRequestDeclined', request));
-        this.Socket.on('friendRequestRemoved', (request: any) => this.emit('friendRequestRemoved', request));
+        for(let event of EVENTS){
+            this.Socket.on(event, (data: any) => this.emit(event, data));
+        }
 
-        this.Socket.on('addBlockedUser', (user: any) => this.emit('addBlockedUser', user));
-        this.Socket.on('removeBlockedUser', (user: any) => this.emit('removeBlockedUser', user));
-
-        this.Socket.on('addFriend', (user: any) => this.emit('addFriend', user));
-        this.Socket.on('removeFriend', (user: any) => this.emit('removeFriend', user));
-        this.Socket.on('pingUser', (user: any) => this.emit('pingUser', user));
-        this.Socket
-
-        this.Socket.on('serverJoin', (server: any) => this.emit('serverJoin', server));
-        this.Socket.on('serverLeave', (server: any) => this.emit('serverLeave', server))
-        this.Socket.on('channelsGet', (channels: any) => this.emit('channelsGet', channels))
         this.Socket.on('login', (user: IUserMe) => {
             user !== null ? this.emit('ready', user) : new Error('Bad token');
             if(user === null) throw new Error('Bad token');
             this.Socket.emit('channelsGet');
+            
+            this.Socket.on('channelsGet', (channels: any) => console.log(channels));
             this.user = user;
         });
     }

@@ -18,6 +18,7 @@ class User {
         this.avatar = data.avatar;
         this.user_id = data.user_id;
         this.username = data.username;
+        this.discriminator = data.discriminator;
     }
 }
 exports.User = User;

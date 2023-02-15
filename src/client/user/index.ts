@@ -5,9 +5,10 @@ export class User implements UserClass{
     public token!: string;
     public servers?: number[] | undefined;
     public channels?: number[] | undefined;
-    public friends?: number[] | undefined;
-    public friends_requests_received?: number[] | undefined;
-    public friends_requests_sent?: number[] | undefined;
+    public channels_obj?: Array<object> | undefined;
+    public friends?: Array<object> | undefined;
+    public friends_requests_received?: Array<object> | undefined;
+    public friends_requests_sent?: Array<object> | undefined;
     public blocked?: number[] | undefined;
     public last_connection?: string | undefined;
     public updated_at?: string | undefined;
@@ -16,6 +17,7 @@ export class User implements UserClass{
     public created_at?: string | undefined;
     public avatar!: string;
     public user_id!: number;
+    public discriminator: string;
     public username!: string;
 
     constructor(data: UserClass){
@@ -34,6 +36,7 @@ export class User implements UserClass{
         this.avatar = data.avatar;
         this.user_id = data.user_id;
         this.username = data.username;
+        this.discriminator = data.discriminator;
     }
 }
 
