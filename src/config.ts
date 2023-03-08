@@ -1,3 +1,3 @@
 export default {
-    URI : 'http://localhost:3000'
+    URI : 'https://revochat.org'
 }

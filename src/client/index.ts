@@ -13,7 +13,7 @@ import { EVENTS } from "./user/utils/EVENTS";
 
 export class Client extends EventEmitter { 
     public user!: UserClass;
-    public Socket = require('socket.io-client')(Config.URI, {transports: ['websocket']});
+    public Socket = require('socket.io-client')(Config.URI);
     static Socket: any;
     public message = new UserMessage(this.Socket);
     public friend = new UserFriends(this.Socket);

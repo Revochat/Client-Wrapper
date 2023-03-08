@@ -24,7 +24,7 @@ const EVENTS_1 = require("./user/utils/EVENTS");
 class Client extends events_1.default {
     constructor() {
         super();
-        this.Socket = require('socket.io-client')(config_1.default.URI, { transports: ['websocket'] });
+        this.Socket = require('socket.io-client')(config_1.default.URI);
         this.message = new messages_1.UserMessage(this.Socket);
         this.friend = new friends_1.UserFriends(this.Socket);
         this.ping = new ping_1.UserPings(this.Socket);
