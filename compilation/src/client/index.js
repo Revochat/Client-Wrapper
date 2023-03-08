@@ -28,6 +28,7 @@ class Client extends events_1.default {
         this.message = new messages_1.UserMessage(this.Socket);
         this.friend = new friends_1.UserFriends(this.Socket);
         this.ping = new ping_1.UserPings(this.Socket);
+        this.channels = [];
         this.call = new rtc_1.UserRTC(this.Socket);
         this.init();
     }
@@ -43,7 +44,7 @@ class Client extends events_1.default {
                 if (user === null)
                     throw new Error('Bad token');
                 this.Socket.emit('channelsGet');
-                this.Socket.on('channelsGet', (channels) => console.log(channels));
+                this.Socket.on('channelsGet', (channels) => this.channels = channels);
                 this.user = user;
             });
         });

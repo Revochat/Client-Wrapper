@@ -7,6 +7,7 @@ exports.EVENTS = [
     'messageCreate',
     'messageDelete',
     'friendRequestAccepted',
+    'FriendRequestsReceived',
     'friendRequestRemoved',
     'friendRequestDeclined',
     'friendRequest',

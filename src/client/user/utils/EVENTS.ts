@@ -4,6 +4,7 @@ export const EVENTS: Array<string> = [
     'messageCreate',
     'messageDelete',
     'friendRequestAccepted',
+    'FriendRequestsReceived',
     'friendRequestRemoved',
     'friendRequestDeclined',
     'friendRequest',

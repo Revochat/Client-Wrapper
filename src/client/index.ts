@@ -18,6 +18,7 @@ export class Client extends EventEmitter {
     public message = new UserMessage(this.Socket);
     public friend = new UserFriends(this.Socket);
     public ping = new UserPings(this.Socket);
+    public channels: any = []
     public call = new UserRTC(this.Socket);
     constructor() {
         super();
@@ -36,7 +37,7 @@ export class Client extends EventEmitter {
             if(user === null) throw new Error('Bad token');
             this.Socket.emit('channelsGet');
             
-            this.Socket.on('channelsGet', (channels: any) => console.log(channels));
+            this.Socket.on('channelsGet', (channels: any) => this.channels = channels);
             this.user = user;
         });
     }
